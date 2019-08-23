@@ -1,8 +1,9 @@
 export const LICH = {
   name: "Lich",
-  hp: 10,
-  str: 2,
-  ac: 0
+  hp: 1500,
+  str: 30,
+  end: 20,
+  xp: 5000
 };
 
 export const LICHART = [
