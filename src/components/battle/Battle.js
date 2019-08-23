@@ -11,11 +11,26 @@ const Battle = ({
 }) => {
   const [art, setArt] = useState([]);
   const [enemy, setEnemy] = useState({});
+  const [characterInstance, setCharacterInstance] = useState(character);
 
   useEffect(() => {
     if (!bossBattle) {
-      setArt(enemies.RATART);
-      setEnemy(enemies.RAT);
+      const r1 = Math.floor(Math.random() * 3) + 1;
+      let enemyInstance;
+      let enemyArtInstance;
+      if (r1 === 1) {
+        enemyInstance = enemies.GHOUL;
+        enemyArtInstance = enemies.GHOULART;
+      } else if (r1 === 2) {
+        enemyInstance = enemies.SKELETON;
+        enemyArtInstance = enemies.SKELETONART;
+      } else {
+        enemyInstance = enemies.RAT;
+        enemyArtInstance = enemies.RATART;
+      }
+
+      setArt(enemyArtInstance);
+      setEnemy(enemyInstance);
     } else {
       setArt(bosses.LICHART);
       setEnemy(bosses.LICH);
@@ -29,59 +44,105 @@ const Battle = ({
   };
 
   const handleBattleInput = event => {
-    let enemyHp = enemy.hp;
-    let characterHp = character.hp;
-    let potionCount = character.potions;
+    let characterObj = { ...characterInstance };
+    let enemyObj = { ...enemy };
+    let randDmg = Math.floor(Math.random() * 10) + 1;
+    let characterDmg = characterObj.str * 2 + randDmg - enemyObj.end;
+    let enemyDmg = enemyObj.str * 2 + randDmg - characterObj.end;
+    if (characterDmg < 0) characterDmg = 0;
+    if (enemyDmg < 0) enemyDmg = 0;
 
     if (event.keyCode === 65) {
       // attack
-      enemyHp -= character.equipment.weapon.dmg;
+      enemyObj.hp -= characterDmg;
 
-      if (enemyHp <= 0) {
+      if (enemyObj.hp <= 0) {
         if (Math.random() >= 0.5) {
-          potionCount++;
-          setCharacter({ ...character, potions: potionCount });
+          characterObj.potions++;
+          characterObj.xp += enemyObj.xp;
           alert("You won and got a potion!");
-        } else alert("You won!");
+          if (characterObj.xp >= characterObj.lvlUp) {
+            lvlUp(characterObj);
+            alert(
+              `Congrats, you've leveled up! You're now level: ${
+                characterObj.level
+              }`
+            );
+          }
+          setCharacterInstance(characterObj);
+          setCharacter(characterObj);
+        } else {
+          alert("You won!");
+          characterObj.xp += enemyObj.xp;
+          if (characterObj.xp >= characterObj.lvlUp) {
+            lvlUp(characterObj);
+            alert(
+              `Congrats, you've leveled up! You're now level: ${
+                characterObj.level
+              }`
+            );
+          }
+          setCharacterInstance(characterObj);
+          setCharacter(characterObj);
+        }
         setBattleMode(false);
         setBossBattle(false);
         document.getElementById("mapFrame").focus();
       } else {
-        characterHp -= enemy.str;
-        if (characterHp <= 0) {
+        characterObj.hp -= enemyDmg;
+        if (characterObj.hp <= 0) {
           alert("You died!");
           window.location.href = "/";
         }
+        setEnemy(enemyObj);
+        setCharacterInstance(characterObj);
+        setCharacter(characterObj);
       }
-      setEnemy({ ...enemy, hp: enemyHp });
-      setCharacter({ ...character, hp: characterHp });
     } else if (event.keyCode === 68) {
       // defend
-      characterHp -= enemy.str;
+      characterObj.hp -= enemyDmg;
 
-      if (characterHp <= 0) {
+      if (characterObj.hp <= 0) {
         alert("You died!");
         window.location.href = "/";
       }
-      setCharacter({ ...character, hp: characterHp });
+      setCharacterInstance(characterObj);
+      setCharacter(characterObj);
     } else if (event.keyCode === 80) {
       // potion
-      if (character.potions <= 0) {
+      if (characterObj.potions <= 0) {
         alert("No Potions!");
-        characterHp -= enemy.str;
-        setCharacter({ ...character, hp: characterHp });
+        characterObj.hp -= enemyDmg;
 
-        if (characterHp <= 0) {
+        if (characterObj.hp <= 0) {
           alert("You died!");
           window.location.href = "/";
         }
+        setCharacterInstance(characterObj);
+        setCharacter(characterObj);
       } else {
-        potionCount--;
-        characterHp = character.maxHp;
-        characterHp -= enemy.str;
-        setCharacter({ ...character, hp: characterHp, potions: potionCount });
+        characterObj.potions--;
+        characterObj.hp = characterObj.maxHp;
+        characterObj.hp -= enemyDmg;
+        if (characterObj.hp <= 0) {
+          alert("You died!");
+          window.location.href = "/";
+        }
+        setCharacterInstance(characterObj);
+        setCharacter(characterObj);
       }
     }
+  };
+
+  const lvlUp = characterObj => {
+    characterObj.level++;
+    characterObj.maxHp += characterObj.con * 2;
+    characterObj.hp = characterObj.maxHp;
+    characterObj.str += 4;
+    characterObj.dex += 2;
+    characterObj.con += 4;
+    characterObj.end += 3;
+    characterObj.lvlUp += Math.floor(characterObj.lvlUp * 1.25);
   };
 
   return (
@@ -106,12 +167,12 @@ const Battle = ({
       </div>
       <div>
         <span style={{ color: "white", margin: "0px" }}>
-          Character Health: {character.hp}
+          Character Health: {characterInstance.hp}
         </span>
       </div>
       <div>
         <span style={{ color: "white", margin: "0px" }}>
-          Potions: {character.potions}
+          Potions: {characterInstance.potions}
         </span>
       </div>
       <div>

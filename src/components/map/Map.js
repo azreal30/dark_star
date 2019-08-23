@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import * as dungeonMaps from "./dungeons/dungeonMaps";
 
-const Map = ({ setBattleMode, setBossBattle }) => {
+const Map = ({ setBattleMode, setBossBattle, setCharMenuScreen }) => {
   const [map, setMap] = useState([]);
   useEffect(() => {
     setMap(dungeonMaps.DUNGEON0);
@@ -15,6 +15,7 @@ const Map = ({ setBattleMode, setBossBattle }) => {
     mapArr.forEach(line => parsedMap.push(line.split("")));
     let x = 0;
     let y = 0;
+    let randomBattle = Math.floor(Math.random() * 10) + 1;
 
     for (let i = 0; i < parsedMap.length; i++) {
       for (let j = 0; j < parsedMap[i].length; j++) {
@@ -25,11 +26,15 @@ const Map = ({ setBattleMode, setBossBattle }) => {
       }
     }
 
+    if (event.keyCode === 27) {
+      setCharMenuScreen(true);
+    }
     if (event.keyCode === 38) {
       if (parsedMap[x - 1][y] === " ") {
         parsedMap[x][y] = " ";
         x--;
         parsedMap[x][y] = "@";
+        if (randomBattle === 1) setBattleMode(true);
       } else if (parsedMap[x - 1][y] === "$") {
         parsedMap[x][y] = " ";
         x--;
@@ -44,7 +49,6 @@ const Map = ({ setBattleMode, setBossBattle }) => {
         parsedMap[x][y] = " ";
         x--;
         parsedMap[x][y] = "@";
-        setBattleMode(true);
       } else if (parsedMap[x - 1][y] === "^") {
         parsedMap[x][y] = " ";
         x--;
@@ -60,6 +64,7 @@ const Map = ({ setBattleMode, setBossBattle }) => {
         parsedMap[x][y] = " ";
         x++;
         parsedMap[x][y] = "@";
+        if (randomBattle === 1) setBattleMode(true);
       } else if (parsedMap[x + 1][y] === "$") {
         parsedMap[x][y] = " ";
         x++;
@@ -74,7 +79,6 @@ const Map = ({ setBattleMode, setBossBattle }) => {
         parsedMap[x][y] = " ";
         x++;
         parsedMap[x][y] = "@";
-        setBattleMode(true);
       } else if (parsedMap[x + 1][y] === "^") {
         parsedMap[x][y] = " ";
         x++;
@@ -90,6 +94,7 @@ const Map = ({ setBattleMode, setBossBattle }) => {
         parsedMap[x][y] = " ";
         y--;
         parsedMap[x][y] = "@";
+        if (randomBattle === 1) setBattleMode(true);
       } else if (parsedMap[x][y - 1] === "$") {
         parsedMap[x][y] = " ";
         y--;
@@ -104,7 +109,6 @@ const Map = ({ setBattleMode, setBossBattle }) => {
         parsedMap[x][y] = " ";
         y--;
         parsedMap[x][y] = "@";
-        setBattleMode(true);
       } else if (parsedMap[x][y - 1] === "^") {
         parsedMap[x][y] = " ";
         y--;
@@ -120,6 +124,7 @@ const Map = ({ setBattleMode, setBossBattle }) => {
         parsedMap[x][y] = " ";
         y++;
         parsedMap[x][y] = "@";
+        if (randomBattle === 1) setBattleMode(true);
       } else if (parsedMap[x][y + 1] === "$") {
         parsedMap[x][y] = " ";
         y++;
@@ -134,7 +139,6 @@ const Map = ({ setBattleMode, setBossBattle }) => {
         parsedMap[x][y] = " ";
         y++;
         parsedMap[x][y] = "@";
-        setBattleMode(true);
       } else if (parsedMap[x][y + 1] === "^") {
         parsedMap[x][y] = " ";
         y++;
