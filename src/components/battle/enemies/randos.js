@@ -1,5 +1,5 @@
 export const RAT = {
-  name: "Rat",
+  desc: "A vicious rat attacks you!",
   hp: 20,
   str: 9,
   end: 5,
@@ -22,7 +22,7 @@ export const RATART = [
 ];
 
 export const GHOUL = {
-  name: "Ghoul",
+  desc: "A shambling ghoul attacks you!",
   hp: 50,
   str: 12,
   end: 7,
@@ -45,9 +45,9 @@ export const GHOULART = [
 ];
 
 export const SKELETON = {
-  name: "Skeleton",
+  desc: "A creaky skeleton attacks you!",
   hp: 200,
-  str: 15,
+  str: 18,
   end: 10,
   xp: 500
 };

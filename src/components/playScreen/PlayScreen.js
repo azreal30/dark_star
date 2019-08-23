@@ -7,7 +7,7 @@ import CharMenu from "../menus/CharMenu";
 const PlayScreen = ({ setGameStarted }) => {
   const [character, setCharacter] = useState({});
   const [battleMode, setBattleMode] = useState(false);
-  const [bossBattle, setBossBattle] = useState(false);
+  const [boss, setBoss] = useState("");
   const [charMenuScreen, setCharMenuScreen] = useState(false);
   useEffect(() => {
     setCharacter(chars.mainChar);
@@ -17,22 +17,22 @@ const PlayScreen = ({ setGameStarted }) => {
   return (
     <div>
       <h2>Dark Star</h2>
-      {(battleMode || bossBattle) && (
+      {battleMode && (
         <Battle
           character={character}
-          bossBattle={bossBattle}
+          boss={boss}
           setCharacter={setCharacter}
           setBattleMode={setBattleMode}
-          setBossBattle={setBossBattle}
+          setBoss={setBoss}
         />
       )}
-      {!(battleMode || bossBattle) && charMenuScreen && (
+      {!battleMode && charMenuScreen && (
         <CharMenu character={character} setCharMenuScreen={setCharMenuScreen} />
       )}
       <Map
         setCharacter={setCharacter}
         setBattleMode={setBattleMode}
-        setBossBattle={setBossBattle}
+        setBoss={setBoss}
         setCharMenuScreen={setCharMenuScreen}
       />
     </div>

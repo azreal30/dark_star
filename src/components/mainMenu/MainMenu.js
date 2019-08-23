@@ -25,22 +25,48 @@ const MainMenu = ({ setGameStarted }) => {
         <br />
         Use the{" "}
         <font color="red">
-          <strong>arrow</strong>
+          <strong>ARROW</strong>
         </font>{" "}
-        keys on the map screen to navigate, you are the @ symbol. When in
-        battle, use the "
+        keys on the map screen to navigate, you are the{" "}
         <font color="red">
-          <strong>a</strong>
+          <strong>@</strong>
+        </font>{" "}
+        symbol. When in battle, use the "
+        <font color="red">
+          <strong>A</strong>
         </font>
         " key to attack, the "
         <font color="red">
-          <strong>d</strong>
+          <strong>D</strong>
         </font>
         " key to defend, and the "
         <font color="red">
-          <strong>p</strong>
+          <strong>P</strong>
         </font>
-        " key to use a potion if you have any.
+        " key to use a potion if you have any. Press the{" "}
+        <font color="red">
+          <strong>ESC</strong>
+        </font>{" "}
+        key on the map to diplay your stats.
+        <br />
+        <br />
+        <font color="red">
+          <strong>!</strong>
+        </font>
+        ,{" "}
+        <font color="red">
+          <strong>&</strong>
+        </font>
+        ,{" "}
+        <font color="red">
+          <strong>%</strong>
+        </font>
+        , and{" "}
+        <font color="red">
+          <strong>*</strong>
+        </font>{" "}
+        are all symbols for the bosses. They increase in difficulty in that
+        order, but they boost your stats on defeat.
       </p>
       <Link to="playScreen" className="btn btn-primary btn-lg">
         Start Game

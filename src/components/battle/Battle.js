@@ -2,19 +2,13 @@ import React, { useState, useEffect } from "react";
 import * as enemies from "./enemies/randos";
 import * as bosses from "./enemies/bosses";
 
-const Battle = ({
-  character,
-  bossBattle,
-  setCharacter,
-  setBattleMode,
-  setBossBattle
-}) => {
+const Battle = ({ character, boss, setCharacter, setBattleMode, setBoss }) => {
   const [art, setArt] = useState([]);
   const [enemy, setEnemy] = useState({});
   const [characterInstance, setCharacterInstance] = useState(character);
 
   useEffect(() => {
-    if (!bossBattle) {
+    if (boss === "") {
       const r1 = Math.floor(Math.random() * 3) + 1;
       let enemyInstance;
       let enemyArtInstance;
@@ -32,11 +26,25 @@ const Battle = ({
       setArt(enemyArtInstance);
       setEnemy(enemyInstance);
     } else {
-      setArt(bosses.LICHART);
-      setEnemy(bosses.LICH);
+      if (boss === "Ogre") {
+        setArt(bosses.OGREART);
+        setEnemy(bosses.OGRE);
+      }
+      if (boss === "Wraith") {
+        setArt(bosses.WRAITHART);
+        setEnemy(bosses.WRAITH);
+      }
+      if (boss === "Lich") {
+        setArt(bosses.LICHART);
+        setEnemy(bosses.LICH);
+      }
+      if (boss === "Death God") {
+        setArt(bosses.DEATHGODART);
+        setEnemy(bosses.DEATHGOD);
+      }
     }
     document.getElementById("battleFrame").focus();
-  }, [bossBattle]);
+  }, [boss]);
 
   const battleStyle = {
     background: "black",
@@ -85,8 +93,31 @@ const Battle = ({
           setCharacterInstance(characterObj);
           setCharacter(characterObj);
         }
+        if (boss === "Ogre") {
+          characterObj.str += 20;
+          characterObj.end += 20;
+          alert(
+            "After felling the ogre, a bright light surrounds and engulfs you. You now feel stronger and more durable!"
+          );
+        }
+        if (boss === "Wraith") {
+          characterObj.dex += 20;
+          characterObj.con += 20;
+          alert(
+            "After dispatching the wraith, a spark of the magic running through it resolves and passes into you. You feel more nimble and hearty!"
+          );
+        }
+        if (boss === "Lich") {
+          characterObj.str += 20;
+          characterObj.dex += 20;
+          characterObj.con += 20;
+          characterObj.end += 20;
+          alert(
+            "After weakinging the Lich and destroying its philactery, the souls used to keeps his corpse animated are finally released. As a reward, they cast a boon on you. You feeling amazing overall!"
+          );
+        }
+        setBoss("");
         setBattleMode(false);
-        setBossBattle(false);
         document.getElementById("mapFrame").focus();
       } else {
         characterObj.hp -= enemyDmg;
@@ -153,9 +184,7 @@ const Battle = ({
       tabIndex="0"
     >
       <div>
-        <p style={{ color: "white", margin: "0px" }}>
-          A vicious {enemy.name} attacks you!
-        </p>
+        <p style={{ color: "white", margin: "0px" }}>{enemy.desc}</p>
       </div>
       {art.map(line => (
         <pre style={{ color: "white", margin: "0px" }}>{line}</pre>
