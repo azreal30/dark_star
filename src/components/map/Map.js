@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import * as dungeonMaps from "./dungeons/dungeonMaps";
 
-const Map = ({ setBattleMode, setBossBattle, setCharMenuScreen }) => {
+const Map = ({ setBattleMode, setBoss, setCharMenuScreen }) => {
   const [map, setMap] = useState([]);
   useEffect(() => {
     setMap(dungeonMaps.DUNGEON0);
@@ -35,20 +35,30 @@ const Map = ({ setBattleMode, setBossBattle, setCharMenuScreen }) => {
         x--;
         parsedMap[x][y] = "@";
         if (randomBattle === 1) setBattleMode(true);
-      } else if (parsedMap[x - 1][y] === "$") {
-        parsedMap[x][y] = " ";
-        x--;
-        parsedMap[x][y] = "@";
-        alert("Congrats, you got the thing!");
       } else if (parsedMap[x - 1][y] === "*") {
         parsedMap[x][y] = " ";
         x--;
         parsedMap[x][y] = "@";
-        setBossBattle(true);
+        setBoss("Death God");
+        setBattleMode(true);
+      } else if (parsedMap[x - 1][y] === "&") {
+        parsedMap[x][y] = " ";
+        x--;
+        parsedMap[x][y] = "@";
+        setBoss("Wraith");
+        setBattleMode(true);
+      } else if (parsedMap[x - 1][y] === "%") {
+        parsedMap[x][y] = " ";
+        x--;
+        parsedMap[x][y] = "@";
+        setBoss("Lich");
+        setBattleMode(true);
       } else if (parsedMap[x - 1][y] === "!") {
         parsedMap[x][y] = " ";
         x--;
         parsedMap[x][y] = "@";
+        setBoss("Ogre");
+        setBattleMode(true);
       } else if (parsedMap[x - 1][y] === "^") {
         parsedMap[x][y] = " ";
         x--;
@@ -65,20 +75,30 @@ const Map = ({ setBattleMode, setBossBattle, setCharMenuScreen }) => {
         x++;
         parsedMap[x][y] = "@";
         if (randomBattle === 1) setBattleMode(true);
-      } else if (parsedMap[x + 1][y] === "$") {
-        parsedMap[x][y] = " ";
-        x++;
-        parsedMap[x][y] = "@";
-        alert("Congrats, you got the thing!");
       } else if (parsedMap[x + 1][y] === "*") {
         parsedMap[x][y] = " ";
         x++;
         parsedMap[x][y] = "@";
-        setBossBattle(true);
+        setBoss("Death God");
+        setBattleMode(true);
+      } else if (parsedMap[x + 1][y] === "&") {
+        parsedMap[x][y] = " ";
+        x++;
+        parsedMap[x][y] = "@";
+        setBoss("Wraith");
+        setBattleMode(true);
+      } else if (parsedMap[x + 1][y] === "%") {
+        parsedMap[x][y] = " ";
+        x++;
+        parsedMap[x][y] = "@";
+        setBoss("Lich");
+        setBattleMode(true);
       } else if (parsedMap[x + 1][y] === "!") {
         parsedMap[x][y] = " ";
         x++;
         parsedMap[x][y] = "@";
+        setBoss("Ogre");
+        setBattleMode(true);
       } else if (parsedMap[x + 1][y] === "^") {
         parsedMap[x][y] = " ";
         x++;
@@ -95,20 +115,30 @@ const Map = ({ setBattleMode, setBossBattle, setCharMenuScreen }) => {
         y--;
         parsedMap[x][y] = "@";
         if (randomBattle === 1) setBattleMode(true);
-      } else if (parsedMap[x][y - 1] === "$") {
-        parsedMap[x][y] = " ";
-        y--;
-        parsedMap[x][y] = "@";
-        alert("Congrats, you got the thing!");
       } else if (parsedMap[x][y - 1] === "*") {
         parsedMap[x][y] = " ";
         y--;
         parsedMap[x][y] = "@";
-        setBossBattle(true);
+        setBoss("Death God");
+        setBattleMode(true);
+      } else if (parsedMap[x][y - 1] === "&") {
+        parsedMap[x][y] = " ";
+        y--;
+        parsedMap[x][y] = "@";
+        setBoss("Wraith");
+        setBattleMode(true);
+      } else if (parsedMap[x][y - 1] === "%") {
+        parsedMap[x][y] = " ";
+        y--;
+        parsedMap[x][y] = "@";
+        setBoss("Lich");
+        setBattleMode(true);
       } else if (parsedMap[x][y - 1] === "!") {
         parsedMap[x][y] = " ";
         y--;
         parsedMap[x][y] = "@";
+        setBoss("Ogre");
+        setBattleMode(true);
       } else if (parsedMap[x][y - 1] === "^") {
         parsedMap[x][y] = " ";
         y--;
@@ -125,20 +155,30 @@ const Map = ({ setBattleMode, setBossBattle, setCharMenuScreen }) => {
         y++;
         parsedMap[x][y] = "@";
         if (randomBattle === 1) setBattleMode(true);
-      } else if (parsedMap[x][y + 1] === "$") {
-        parsedMap[x][y] = " ";
-        y++;
-        parsedMap[x][y] = "@";
-        alert("Congrats, you got the thing!");
       } else if (parsedMap[x][y + 1] === "*") {
         parsedMap[x][y] = " ";
         y++;
         parsedMap[x][y] = "@";
-        setBossBattle(true);
+        setBoss("Death God");
+        setBattleMode(true);
+      } else if (parsedMap[x][y + 1] === "&") {
+        parsedMap[x][y] = " ";
+        y++;
+        parsedMap[x][y] = "@";
+        setBoss("Wraith");
+        setBattleMode(true);
+      } else if (parsedMap[x][y + 1] === "%") {
+        parsedMap[x][y] = " ";
+        y++;
+        parsedMap[x][y] = "@";
+        setBoss("Lich");
+        setBattleMode(true);
       } else if (parsedMap[x][y + 1] === "!") {
         parsedMap[x][y] = " ";
         y++;
         parsedMap[x][y] = "@";
+        setBoss("Ogre");
+        setBattleMode(true);
       } else if (parsedMap[x][y + 1] === "^") {
         parsedMap[x][y] = " ";
         y++;
