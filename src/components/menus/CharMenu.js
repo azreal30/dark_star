@@ -12,7 +12,6 @@ const CharMenu = () => {
   const handleKeyDown = event => {
     if (event.keyCode === 27) {
       dispatch(charMenuDisplay(false));
-      document.getElementById("mapFrame").focus();
     }
   };
 

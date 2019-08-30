@@ -120,7 +120,6 @@ const Battle = () => {
         }
         dispatch(bossFight(""));
         dispatch(battleMode(false));
-        document.getElementById("mapFrame").focus();
       } else {
         characterObj.hp -= enemyDmg;
         if (characterObj.hp <= 0) {

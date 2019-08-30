@@ -18,7 +18,7 @@ const PlayScreen = () => {
       <h2>Dark Star</h2>
       {battleMode && <Battle />}
       {!battleMode && charMenuScreen && <CharMenu />}
-      <Map />
+      {!battleMode && !charMenuScreen && <Map />}
     </div>
   );
 };
