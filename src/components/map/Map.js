@@ -70,6 +70,7 @@ const Map = () => {
         x--;
         parsedMap[x][y] = "@";
         alert("Congrats, you beat it!");
+        window.location.reload();
         window.location.href = "/";
       }
       parsedMap.forEach(line => updatedMap.push(line.join("")));
@@ -110,6 +111,7 @@ const Map = () => {
         x++;
         parsedMap[x][y] = "@";
         alert("Congrats, you beat it!");
+        window.location.reload();
         window.location.href = "/";
       }
       parsedMap.forEach(line => updatedMap.push(line.join("")));
@@ -150,6 +152,7 @@ const Map = () => {
         y--;
         parsedMap[x][y] = "@";
         alert("Congrats, you beat it!");
+        window.location.reload();
         window.location.href = "/";
       }
       parsedMap.forEach(line => updatedMap.push(line.join("")));
@@ -190,6 +193,7 @@ const Map = () => {
         y++;
         parsedMap[x][y] = "@";
         alert("Congrats, you beat it!");
+        window.location.reload();
         window.location.href = "/";
       }
       parsedMap.forEach(line => updatedMap.push(line.join("")));

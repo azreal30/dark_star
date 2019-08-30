@@ -125,6 +125,7 @@ const Battle = () => {
         characterObj.hp -= enemyDmg;
         if (characterObj.hp <= 0) {
           alert("You died!");
+          window.location.reload();
           window.location.href = "/";
         }
         setEnemy(enemyObj);
@@ -136,6 +137,7 @@ const Battle = () => {
 
       if (characterObj.hp <= 0) {
         alert("You died!");
+        window.location.reload();
         window.location.href = "/";
       }
       dispatch(updateCharacter(characterObj));
@@ -147,6 +149,7 @@ const Battle = () => {
 
         if (characterObj.hp <= 0) {
           alert("You died!");
+          window.location.reload();
           window.location.href = "/";
         }
         dispatch(updateCharacter(characterObj));
@@ -156,6 +159,7 @@ const Battle = () => {
         characterObj.hp -= enemyDmg;
         if (characterObj.hp <= 0) {
           alert("You died!");
+          window.location.reload();
           window.location.href = "/";
         }
         dispatch(updateCharacter(characterObj));

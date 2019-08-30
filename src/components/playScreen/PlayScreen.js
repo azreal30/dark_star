@@ -5,7 +5,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { gameStarted } from "../../redux/actions/index";
 import CharMenu from "../menus/CharMenu";
 
-// switch battle mode and boss to utilize redux state
 const PlayScreen = () => {
   const charMenuScreen = useSelector(state => state.charMenuScreen);
   const battleMode = useSelector(state => state.battleMode);
