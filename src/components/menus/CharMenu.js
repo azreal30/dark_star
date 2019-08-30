@@ -1,13 +1,17 @@
 import React, { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { charMenuDisplay } from "../../redux/actions/index";
 
-const CharMenu = ({ character, setCharMenuScreen }) => {
+const CharMenu = () => {
+  const character = useSelector(state => state.character);
+  const dispatch = useDispatch();
   useEffect(() => {
     document.getElementById("charMenuFrame").focus();
   }, []);
 
   const handleKeyDown = event => {
     if (event.keyCode === 27) {
-      setCharMenuScreen(false);
+      dispatch(charMenuDisplay(false));
       document.getElementById("mapFrame").focus();
     }
   };

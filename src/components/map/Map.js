@@ -1,10 +1,16 @@
-import React, { useState, useEffect } from "react";
-import * as dungeonMaps from "./dungeons/dungeonMaps";
+import React, { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  charMenuDisplay,
+  battleMode,
+  bossFight,
+  setMap
+} from "../../redux/actions/index";
 
-const Map = ({ setBattleMode, setBoss, setCharMenuScreen }) => {
-  const [map, setMap] = useState([]);
+const Map = () => {
+  const map = useSelector(state => state.map);
+  const dispatch = useDispatch();
   useEffect(() => {
-    setMap(dungeonMaps.DUNGEON0);
     document.getElementById("mapFrame").focus();
   }, []);
 
@@ -27,38 +33,38 @@ const Map = ({ setBattleMode, setBoss, setCharMenuScreen }) => {
     }
 
     if (event.keyCode === 27) {
-      setCharMenuScreen(true);
+      dispatch(charMenuDisplay(true));
     }
     if (event.keyCode === 38) {
       if (parsedMap[x - 1][y] === " ") {
         parsedMap[x][y] = " ";
         x--;
         parsedMap[x][y] = "@";
-        if (randomBattle === 1) setBattleMode(true);
+        if (randomBattle === 1) dispatch(battleMode(true));
       } else if (parsedMap[x - 1][y] === "*") {
         parsedMap[x][y] = " ";
         x--;
         parsedMap[x][y] = "@";
-        setBoss("Death God");
-        setBattleMode(true);
+        dispatch(bossFight("Death God"));
+        dispatch(battleMode(true));
       } else if (parsedMap[x - 1][y] === "&") {
         parsedMap[x][y] = " ";
         x--;
         parsedMap[x][y] = "@";
-        setBoss("Wraith");
-        setBattleMode(true);
+        dispatch(bossFight("Wraith"));
+        dispatch(battleMode(true));
       } else if (parsedMap[x - 1][y] === "%") {
         parsedMap[x][y] = " ";
         x--;
         parsedMap[x][y] = "@";
-        setBoss("Lich");
-        setBattleMode(true);
+        dispatch(bossFight("Lich"));
+        dispatch(battleMode(true));
       } else if (parsedMap[x - 1][y] === "!") {
         parsedMap[x][y] = " ";
         x--;
         parsedMap[x][y] = "@";
-        setBoss("Ogre");
-        setBattleMode(true);
+        dispatch(bossFight("Ogre"));
+        dispatch(battleMode(true));
       } else if (parsedMap[x - 1][y] === "^") {
         parsedMap[x][y] = " ";
         x--;
@@ -67,38 +73,38 @@ const Map = ({ setBattleMode, setBoss, setCharMenuScreen }) => {
         window.location.href = "/";
       }
       parsedMap.forEach(line => updatedMap.push(line.join("")));
-      setMap(updatedMap);
+      dispatch(setMap(updatedMap));
     }
     if (event.keyCode === 40) {
       if (parsedMap[x + 1][y] === " ") {
         parsedMap[x][y] = " ";
         x++;
         parsedMap[x][y] = "@";
-        if (randomBattle === 1) setBattleMode(true);
+        if (randomBattle === 1) dispatch(battleMode(true));
       } else if (parsedMap[x + 1][y] === "*") {
         parsedMap[x][y] = " ";
         x++;
         parsedMap[x][y] = "@";
-        setBoss("Death God");
-        setBattleMode(true);
+        dispatch(bossFight("Death God"));
+        dispatch(battleMode(true));
       } else if (parsedMap[x + 1][y] === "&") {
         parsedMap[x][y] = " ";
         x++;
         parsedMap[x][y] = "@";
-        setBoss("Wraith");
-        setBattleMode(true);
+        dispatch(bossFight("Wraith"));
+        dispatch(battleMode(true));
       } else if (parsedMap[x + 1][y] === "%") {
         parsedMap[x][y] = " ";
         x++;
         parsedMap[x][y] = "@";
-        setBoss("Lich");
-        setBattleMode(true);
+        dispatch(bossFight("Lich"));
+        dispatch(battleMode(true));
       } else if (parsedMap[x + 1][y] === "!") {
         parsedMap[x][y] = " ";
         x++;
         parsedMap[x][y] = "@";
-        setBoss("Ogre");
-        setBattleMode(true);
+        dispatch(bossFight("Ogre"));
+        dispatch(battleMode(true));
       } else if (parsedMap[x + 1][y] === "^") {
         parsedMap[x][y] = " ";
         x++;
@@ -107,38 +113,38 @@ const Map = ({ setBattleMode, setBoss, setCharMenuScreen }) => {
         window.location.href = "/";
       }
       parsedMap.forEach(line => updatedMap.push(line.join("")));
-      setMap(updatedMap);
+      dispatch(setMap(updatedMap));
     }
     if (event.keyCode === 37) {
       if (parsedMap[x][y - 1] === " ") {
         parsedMap[x][y] = " ";
         y--;
         parsedMap[x][y] = "@";
-        if (randomBattle === 1) setBattleMode(true);
+        if (randomBattle === 1) dispatch(battleMode(true));
       } else if (parsedMap[x][y - 1] === "*") {
         parsedMap[x][y] = " ";
         y--;
         parsedMap[x][y] = "@";
-        setBoss("Death God");
-        setBattleMode(true);
+        dispatch(bossFight("Death God"));
+        dispatch(battleMode(true));
       } else if (parsedMap[x][y - 1] === "&") {
         parsedMap[x][y] = " ";
         y--;
         parsedMap[x][y] = "@";
-        setBoss("Wraith");
-        setBattleMode(true);
+        dispatch(bossFight("Wraith"));
+        dispatch(battleMode(true));
       } else if (parsedMap[x][y - 1] === "%") {
         parsedMap[x][y] = " ";
         y--;
         parsedMap[x][y] = "@";
-        setBoss("Lich");
-        setBattleMode(true);
+        dispatch(bossFight("Lich"));
+        dispatch(battleMode(true));
       } else if (parsedMap[x][y - 1] === "!") {
         parsedMap[x][y] = " ";
         y--;
         parsedMap[x][y] = "@";
-        setBoss("Ogre");
-        setBattleMode(true);
+        dispatch(bossFight("Ogre"));
+        dispatch(battleMode(true));
       } else if (parsedMap[x][y - 1] === "^") {
         parsedMap[x][y] = " ";
         y--;
@@ -147,38 +153,38 @@ const Map = ({ setBattleMode, setBoss, setCharMenuScreen }) => {
         window.location.href = "/";
       }
       parsedMap.forEach(line => updatedMap.push(line.join("")));
-      setMap(updatedMap);
+      dispatch(setMap(updatedMap));
     }
     if (event.keyCode === 39) {
       if (parsedMap[x][y + 1] === " ") {
         parsedMap[x][y] = " ";
         y++;
         parsedMap[x][y] = "@";
-        if (randomBattle === 1) setBattleMode(true);
+        if (randomBattle === 1) dispatch(battleMode(true));
       } else if (parsedMap[x][y + 1] === "*") {
         parsedMap[x][y] = " ";
         y++;
         parsedMap[x][y] = "@";
-        setBoss("Death God");
-        setBattleMode(true);
+        dispatch(bossFight("Death God"));
+        dispatch(battleMode(true));
       } else if (parsedMap[x][y + 1] === "&") {
         parsedMap[x][y] = " ";
         y++;
         parsedMap[x][y] = "@";
-        setBoss("Wraith");
-        setBattleMode(true);
+        dispatch(bossFight("Wraith"));
+        dispatch(battleMode(true));
       } else if (parsedMap[x][y + 1] === "%") {
         parsedMap[x][y] = " ";
         y++;
         parsedMap[x][y] = "@";
-        setBoss("Lich");
-        setBattleMode(true);
+        dispatch(bossFight("Lich"));
+        dispatch(battleMode(true));
       } else if (parsedMap[x][y + 1] === "!") {
         parsedMap[x][y] = " ";
         y++;
         parsedMap[x][y] = "@";
-        setBoss("Ogre");
-        setBattleMode(true);
+        dispatch(bossFight("Ogre"));
+        dispatch(battleMode(true));
       } else if (parsedMap[x][y + 1] === "^") {
         parsedMap[x][y] = " ";
         y++;
@@ -187,7 +193,7 @@ const Map = ({ setBattleMode, setBoss, setCharMenuScreen }) => {
         window.location.href = "/";
       }
       parsedMap.forEach(line => updatedMap.push(line.join("")));
-      setMap(updatedMap);
+      dispatch(setMap(updatedMap));
     }
   };
 

@@ -1,40 +1,25 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import Map from "../map/Map";
 import Battle from "../battle/Battle";
-import * as chars from "../characters/mainChar";
+import { useSelector, useDispatch } from "react-redux";
+import { gameStarted } from "../../redux/actions/index";
 import CharMenu from "../menus/CharMenu";
 
-const PlayScreen = ({ setGameStarted }) => {
-  const [character, setCharacter] = useState({});
-  const [battleMode, setBattleMode] = useState(false);
-  const [boss, setBoss] = useState("");
-  const [charMenuScreen, setCharMenuScreen] = useState(false);
+// switch battle mode and boss to utilize redux state
+const PlayScreen = () => {
+  const charMenuScreen = useSelector(state => state.charMenuScreen);
+  const battleMode = useSelector(state => state.battleMode);
+  const dispatch = useDispatch();
   useEffect(() => {
-    setCharacter(chars.mainChar);
-    setGameStarted(true);
-  }, [setGameStarted]);
+    dispatch(gameStarted(true));
+  }, [dispatch]);
 
   return (
     <div>
       <h2>Dark Star</h2>
-      {battleMode && (
-        <Battle
-          character={character}
-          boss={boss}
-          setCharacter={setCharacter}
-          setBattleMode={setBattleMode}
-          setBoss={setBoss}
-        />
-      )}
-      {!battleMode && charMenuScreen && (
-        <CharMenu character={character} setCharMenuScreen={setCharMenuScreen} />
-      )}
-      <Map
-        setCharacter={setCharacter}
-        setBattleMode={setBattleMode}
-        setBoss={setBoss}
-        setCharMenuScreen={setCharMenuScreen}
-      />
+      {battleMode && <Battle />}
+      {!battleMode && charMenuScreen && <CharMenu />}
+      <Map />
     </div>
   );
 };
