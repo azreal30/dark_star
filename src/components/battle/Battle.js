@@ -171,7 +171,7 @@ const Battle = () => {
     characterObj.dex += 2;
     characterObj.con += 4;
     characterObj.end += 3;
-    characterObj.lvlUp += Math.floor(characterObj.lvlUp * 1.25);
+    characterObj.lvlUp += Math.floor(characterObj.lvlUp * 1.15);
   };
 
   return (
