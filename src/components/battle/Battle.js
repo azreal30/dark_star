@@ -8,41 +8,40 @@ const Battle = ({ character, boss, setCharacter, setBattleMode, setBoss }) => {
   const [characterInstance, setCharacterInstance] = useState(character);
 
   useEffect(() => {
+    let enemyInstance;
+    let enemyArtInstance;
     if (boss === "") {
-      const r1 = Math.floor(Math.random() * 3) + 1;
-      let enemyInstance;
-      let enemyArtInstance;
-      if (r1 === 1) {
-        enemyInstance = enemies.GHOUL;
+      const r1 = Math.floor(Math.random() * 10) + 1;
+      if (r1 >= 2 && r1 <= 4) {
         enemyArtInstance = enemies.GHOULART;
-      } else if (r1 === 2) {
-        enemyInstance = enemies.SKELETON;
+        enemyInstance = enemies.GHOUL;
+      } else if (r1 === 1) {
         enemyArtInstance = enemies.SKELETONART;
+        enemyInstance = enemies.SKELETON;
       } else {
-        enemyInstance = enemies.RAT;
         enemyArtInstance = enemies.RATART;
+        enemyInstance = enemies.RAT;
       }
-
-      setArt(enemyArtInstance);
-      setEnemy(enemyInstance);
     } else {
       if (boss === "Ogre") {
-        setArt(bosses.OGREART);
-        setEnemy(bosses.OGRE);
+        enemyArtInstance = bosses.OGREART;
+        enemyInstance = bosses.OGRE;
       }
       if (boss === "Wraith") {
-        setArt(bosses.WRAITHART);
-        setEnemy(bosses.WRAITH);
+        enemyArtInstance = bosses.WRAITHART;
+        enemyInstance = bosses.WRAITH;
       }
       if (boss === "Lich") {
-        setArt(bosses.LICHART);
-        setEnemy(bosses.LICH);
+        enemyArtInstance = bosses.LICHART;
+        enemyInstance = bosses.LICH;
       }
       if (boss === "Death God") {
-        setArt(bosses.DEATHGODART);
-        setEnemy(bosses.DEATHGOD);
+        enemyArtInstance = bosses.DEATHGODART;
+        enemyInstance = bosses.DEATHGOD;
       }
     }
+    setArt(enemyArtInstance);
+    setEnemy(enemyInstance);
     document.getElementById("battleFrame").focus();
   }, [boss]);
 
@@ -52,16 +51,31 @@ const Battle = ({ character, boss, setCharacter, setBattleMode, setBoss }) => {
   };
 
   const handleBattleInput = event => {
+    let command = event.keyCode;
+    battleEngine(command);
+  };
+
+  const lvlUp = characterObj => {
+    characterObj.level++;
+    characterObj.maxHp += characterObj.con * 2;
+    characterObj.hp = characterObj.maxHp;
+    characterObj.str += 4;
+    characterObj.dex += 2;
+    characterObj.con += 4;
+    characterObj.end += 3;
+    characterObj.lvlUp += Math.floor(characterObj.lvlUp * 1.25);
+  };
+
+  const battleEngine = command => {
     let characterObj = { ...characterInstance };
     let enemyObj = { ...enemy };
     let randDmg = Math.floor(Math.random() * 10) + 1;
     let characterDmg = characterObj.str * 2 + randDmg - enemyObj.end;
     let enemyDmg = enemyObj.str * 2 + randDmg - characterObj.end;
-    if (characterDmg < 0) characterDmg = 0;
-    if (enemyDmg < 0) enemyDmg = 0;
+    if (characterDmg < 0) characterDmg = randDmg;
+    if (enemyDmg < 0) enemyDmg = randDmg;
 
-    if (event.keyCode === 65) {
-      // attack
+    const attack = () => {
       enemyObj.hp -= characterDmg;
 
       if (enemyObj.hp <= 0) {
@@ -72,9 +86,7 @@ const Battle = ({ character, boss, setCharacter, setBattleMode, setBoss }) => {
           if (characterObj.xp >= characterObj.lvlUp) {
             lvlUp(characterObj);
             alert(
-              `Congrats, you've leveled up! You're now level: ${
-                characterObj.level
-              }`
+              `Congrats, you've leveled up! You're now level: ${characterObj.level}`
             );
           }
           setCharacterInstance(characterObj);
@@ -85,9 +97,7 @@ const Battle = ({ character, boss, setCharacter, setBattleMode, setBoss }) => {
           if (characterObj.xp >= characterObj.lvlUp) {
             lvlUp(characterObj);
             alert(
-              `Congrats, you've leveled up! You're now level: ${
-                characterObj.level
-              }`
+              `Congrats, you've leveled up! You're now level: ${characterObj.level}`
             );
           }
           setCharacterInstance(characterObj);
@@ -129,9 +139,9 @@ const Battle = ({ character, boss, setCharacter, setBattleMode, setBoss }) => {
         setCharacterInstance(characterObj);
         setCharacter(characterObj);
       }
-    } else if (event.keyCode === 68) {
-      // defend
-      characterObj.hp -= enemyDmg;
+    };
+    const defend = () => {
+      characterObj.hp -= Math.floor(enemyDmg / 2);
 
       if (characterObj.hp <= 0) {
         alert("You died!");
@@ -139,8 +149,8 @@ const Battle = ({ character, boss, setCharacter, setBattleMode, setBoss }) => {
       }
       setCharacterInstance(characterObj);
       setCharacter(characterObj);
-    } else if (event.keyCode === 80) {
-      // potion
+    };
+    const potion = () => {
       if (characterObj.potions <= 0) {
         alert("No Potions!");
         characterObj.hp -= enemyDmg;
@@ -162,18 +172,11 @@ const Battle = ({ character, boss, setCharacter, setBattleMode, setBoss }) => {
         setCharacterInstance(characterObj);
         setCharacter(characterObj);
       }
-    }
-  };
+    };
 
-  const lvlUp = characterObj => {
-    characterObj.level++;
-    characterObj.maxHp += characterObj.con * 2;
-    characterObj.hp = characterObj.maxHp;
-    characterObj.str += 4;
-    characterObj.dex += 2;
-    characterObj.con += 4;
-    characterObj.end += 3;
-    characterObj.lvlUp += Math.floor(characterObj.lvlUp * 1.25);
+    if (command === 65) attack();
+    if (command === 68) defend();
+    if (command === 80) potion();
   };
 
   return (
