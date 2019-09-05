@@ -14,7 +14,7 @@ const Map = () => {
     document.getElementById("mapFrame").focus();
   }, []);
 
-  const handleKeyDown = event => {
+  const movementEngine = direction => {
     let mapArr = map;
     let parsedMap = [];
     let updatedMap = [];
@@ -32,10 +32,7 @@ const Map = () => {
       }
     }
 
-    if (event.keyCode === 27) {
-      dispatch(charMenuDisplay(true));
-    }
-    if (event.keyCode === 38) {
+    const up = () => {
       if (parsedMap[x - 1][y] === " ") {
         parsedMap[x][y] = " ";
         x--;
@@ -75,8 +72,8 @@ const Map = () => {
       }
       parsedMap.forEach(line => updatedMap.push(line.join("")));
       dispatch(setMap(updatedMap));
-    }
-    if (event.keyCode === 40) {
+    };
+    const down = () => {
       if (parsedMap[x + 1][y] === " ") {
         parsedMap[x][y] = " ";
         x++;
@@ -116,8 +113,8 @@ const Map = () => {
       }
       parsedMap.forEach(line => updatedMap.push(line.join("")));
       dispatch(setMap(updatedMap));
-    }
-    if (event.keyCode === 37) {
+    };
+    const left = () => {
       if (parsedMap[x][y - 1] === " ") {
         parsedMap[x][y] = " ";
         y--;
@@ -157,8 +154,8 @@ const Map = () => {
       }
       parsedMap.forEach(line => updatedMap.push(line.join("")));
       dispatch(setMap(updatedMap));
-    }
-    if (event.keyCode === 39) {
+    };
+    const right = () => {
       if (parsedMap[x][y + 1] === " ") {
         parsedMap[x][y] = " ";
         y++;
@@ -198,7 +195,29 @@ const Map = () => {
       }
       parsedMap.forEach(line => updatedMap.push(line.join("")));
       dispatch(setMap(updatedMap));
+    };
+
+    if (direction === 38) {
+      up();
     }
+    if (direction === 40) {
+      down();
+    }
+    if (direction === 37) {
+      left();
+    }
+    if (direction === 39) {
+      right();
+    }
+  };
+
+  const handleKeyDown = event => {
+    let keyStroke = event.keyCode;
+
+    //escape
+    if (event.keyCode === 27) {
+      dispatch(charMenuDisplay(true));
+    } else movementEngine(keyStroke);
   };
 
   const mapStyle = {

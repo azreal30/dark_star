@@ -15,8 +15,20 @@ const CharMenu = () => {
     }
   };
 
+  const charMenuStyle = {
+    background: "black",
+    fontSize: "20px",
+    color: "white",
+    margin: "0px"
+  };
+
   return (
-    <div id="charMenuFrame" onKeyDown={handleKeyDown} tabIndex="0">
+    <div
+      style={charMenuStyle}
+      id="charMenuFrame"
+      onKeyDown={handleKeyDown}
+      tabIndex="0"
+    >
       <div>Character Stats</div>
       <ul>
         <li>Health: {character.hp}</li>
