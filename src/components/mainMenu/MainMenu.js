@@ -1,10 +1,13 @@
 import React, { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { gameStarted } from "../../redux/actions/index";
 import { Link } from "react-router-dom";
 
-const MainMenu = ({ setGameStarted }) => {
+const MainMenu = () => {
+  const dispatch = useDispatch();
   useEffect(() => {
-    setGameStarted(false);
-  }, [setGameStarted]);
+    dispatch(gameStarted(false));
+  }, [dispatch]);
   return (
     <div className="jumbotron">
       <h1>Welcome to the void!</h1>

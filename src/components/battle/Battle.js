@@ -1,15 +1,24 @@
 import React, { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import * as enemies from "./enemies/randos";
 import * as bosses from "./enemies/bosses";
+import {
+  updateCharacter,
+  battleMode,
+  bossFight
+} from "../../redux/actions/index";
 
-const Battle = ({ character, boss, setCharacter, setBattleMode, setBoss }) => {
+const Battle = () => {
   const [art, setArt] = useState([]);
   const [enemy, setEnemy] = useState({});
-  const [characterInstance, setCharacterInstance] = useState(character);
+  const characterInstance = useSelector(state => state.character);
+  const boss = useSelector(state => state.boss);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    let enemyInstance;
     let enemyArtInstance;
+    let enemyInstance;
+    
     if (boss === "") {
       const r1 = Math.floor(Math.random() * 10) + 1;
       if (r1 >= 2 && r1 <= 4) {
@@ -63,7 +72,7 @@ const Battle = ({ character, boss, setCharacter, setBattleMode, setBoss }) => {
     characterObj.dex += 2;
     characterObj.con += 4;
     characterObj.end += 3;
-    characterObj.lvlUp += Math.floor(characterObj.lvlUp * 1.25);
+    characterObj.lvlUp += Math.floor(characterObj.lvlUp * 1.15);
   };
 
   const battleEngine = command => {
@@ -72,8 +81,9 @@ const Battle = ({ character, boss, setCharacter, setBattleMode, setBoss }) => {
     let randDmg = Math.floor(Math.random() * 10) + 1;
     let characterDmg = characterObj.str * 2 + randDmg - enemyObj.end;
     let enemyDmg = enemyObj.str * 2 + randDmg - characterObj.end;
-    if (characterDmg < 0) characterDmg = randDmg;
-    if (enemyDmg < 0) enemyDmg = randDmg;
+    
+    if (characterDmg <= 0) characterDmg = randDmg;
+    if (enemyDmg <= 0) enemyDmg = randDmg;
 
     const attack = () => {
       enemyObj.hp -= characterDmg;
@@ -89,8 +99,7 @@ const Battle = ({ character, boss, setCharacter, setBattleMode, setBoss }) => {
               `Congrats, you've leveled up! You're now level: ${characterObj.level}`
             );
           }
-          setCharacterInstance(characterObj);
-          setCharacter(characterObj);
+          dispatch(updateCharacter(characterObj));
         } else {
           alert("You won!");
           characterObj.xp += enemyObj.xp;
@@ -100,8 +109,7 @@ const Battle = ({ character, boss, setCharacter, setBattleMode, setBoss }) => {
               `Congrats, you've leveled up! You're now level: ${characterObj.level}`
             );
           }
-          setCharacterInstance(characterObj);
-          setCharacter(characterObj);
+          dispatch(updateCharacter(characterObj));
         }
         if (boss === "Ogre") {
           characterObj.str += 20;
@@ -126,18 +134,17 @@ const Battle = ({ character, boss, setCharacter, setBattleMode, setBoss }) => {
             "After weakinging the Lich and destroying its philactery, the souls used to keeps his corpse animated are finally released. As a reward, they cast a boon on you. You feeling amazing overall!"
           );
         }
-        setBoss("");
-        setBattleMode(false);
-        document.getElementById("mapFrame").focus();
+        dispatch(bossFight(""));
+        dispatch(battleMode(false));
       } else {
         characterObj.hp -= enemyDmg;
         if (characterObj.hp <= 0) {
           alert("You died!");
+          window.location.reload();
           window.location.href = "/";
         }
         setEnemy(enemyObj);
-        setCharacterInstance(characterObj);
-        setCharacter(characterObj);
+        dispatch(updateCharacter(characterObj));
       }
     };
     const defend = () => {
@@ -145,10 +152,10 @@ const Battle = ({ character, boss, setCharacter, setBattleMode, setBoss }) => {
 
       if (characterObj.hp <= 0) {
         alert("You died!");
+        window.location.reload();
         window.location.href = "/";
       }
-      setCharacterInstance(characterObj);
-      setCharacter(characterObj);
+      dispatch(updateCharacter(characterObj));
     };
     const potion = () => {
       if (characterObj.potions <= 0) {
@@ -157,20 +164,20 @@ const Battle = ({ character, boss, setCharacter, setBattleMode, setBoss }) => {
 
         if (characterObj.hp <= 0) {
           alert("You died!");
+          window.location.reload();
           window.location.href = "/";
         }
-        setCharacterInstance(characterObj);
-        setCharacter(characterObj);
+        dispatch(updateCharacter(characterObj));
       } else {
         characterObj.potions--;
         characterObj.hp = characterObj.maxHp;
         characterObj.hp -= enemyDmg;
         if (characterObj.hp <= 0) {
           alert("You died!");
+          window.location.reload();
           window.location.href = "/";
         }
-        setCharacterInstance(characterObj);
-        setCharacter(characterObj);
+        dispatch(updateCharacter(characterObj));
       }
     };
 
