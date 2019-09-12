@@ -18,7 +18,7 @@ const Battle = () => {
   useEffect(() => {
     let enemyArtInstance;
     let enemyInstance;
-
+    
     if (boss === "") {
       const r1 = Math.floor(Math.random() * 10) + 1;
       if (r1 >= 2 && r1 <= 4) {
@@ -81,6 +81,7 @@ const Battle = () => {
     let randDmg = Math.floor(Math.random() * 10) + 1;
     let characterDmg = characterObj.str * 2 + randDmg - enemyObj.end;
     let enemyDmg = enemyObj.str * 2 + randDmg - characterObj.end;
+    
     if (characterDmg <= 0) characterDmg = randDmg;
     if (enemyDmg <= 0) enemyDmg = randDmg;
 

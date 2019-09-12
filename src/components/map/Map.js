@@ -21,7 +21,7 @@ const Map = () => {
     mapArr.forEach(line => parsedMap.push(line.split("")));
     let x = 0;
     let y = 0;
-    let randomBattle = Math.floor(Math.random() * 10) + 1;
+    let randomBattle = Math.floor(Math.random() * 20) + 1;
 
     for (let i = 0; i < parsedMap.length; i++) {
       for (let j = 0; j < parsedMap[i].length; j++) {
